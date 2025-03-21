@@ -11,4 +11,13 @@ class GetGamesUseCase @Inject constructor(
     suspend fun getXboxGames(): List<Games> {
         return gameRepository.getXboxGames()
     }
+
+    suspend fun getPlaystationGames(): List<Games> {
+        return gameRepository.getPlaystationGames()
+    }
+
+    suspend fun getSwitchGames(): List<Games> {
+        return gameRepository.getSwitchGames()
+    }
+
 }

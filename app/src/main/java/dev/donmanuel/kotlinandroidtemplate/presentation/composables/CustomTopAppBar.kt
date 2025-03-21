@@ -110,7 +110,6 @@ fun CustomTopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = surfaceLight
         ),
-        modifier = Modifier.padding(bottom = 8.dp)
     )
 }
 
