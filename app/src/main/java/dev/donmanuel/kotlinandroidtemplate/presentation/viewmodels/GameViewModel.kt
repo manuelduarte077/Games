@@ -18,11 +18,19 @@ class GameViewModel @Inject constructor(
     private val _xboxGames = MutableStateFlow<List<Games>>(emptyList())
     val xboxGames: StateFlow<List<Games>> = _xboxGames
 
+    private val _playstationGames = MutableStateFlow<List<Games>>(emptyList())
+    val playstationGames: StateFlow<List<Games>> = _playstationGames
+
+    private val _switchGames = MutableStateFlow<List<Games>>(emptyList())
+    val switchGames: StateFlow<List<Games>> = _switchGames
+
     private val _isLoading = MutableStateFlow<Boolean>(true)
     val isLoading: StateFlow<Boolean> get() = _isLoading
 
     init {
         fetchXboxGames()
+        fetchPlaystationGames()
+        fetchSwitchGames()
     }
 
     private fun fetchXboxGames() {
@@ -30,6 +38,30 @@ class GameViewModel @Inject constructor(
             try {
                 val games = getGamesUseCase.getXboxGames()
                 _xboxGames.value = games
+                _isLoading.value = false
+            } catch (_: Exception) {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun fetchPlaystationGames() {
+        viewModelScope.launch {
+            try {
+                val games = getGamesUseCase.getPlaystationGames()
+                _playstationGames.value = games
+                _isLoading.value = false
+            } catch (_: Exception) {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun fetchSwitchGames() {
+        viewModelScope.launch {
+            try {
+                val games = getGamesUseCase.getSwitchGames()
+                _switchGames.value = games
                 _isLoading.value = false
             } catch (_: Exception) {
                 _isLoading.value = false
