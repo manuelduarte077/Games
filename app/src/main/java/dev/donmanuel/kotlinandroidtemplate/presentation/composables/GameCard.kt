@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -35,23 +36,35 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.donmanuel.kotlinandroidtemplate.domain.model.Games
+import dev.donmanuel.kotlinandroidtemplate.ui.utils.GamePlatform
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun GameCard(game: Games) {
+fun GameCard(game: Games, platform: GamePlatform) {
     var expanded by remember { mutableStateOf(false) }
     val rotationState by animateFloatAsState(targetValue = if (expanded) 180f else 0f, label = "")
     var isFavorite by remember { mutableStateOf(false) }
+
+    val cardBackgroundColor = when (platform) {
+        GamePlatform.XBOX -> Color(0xFFB5E6B5) // Xbox green
+        GamePlatform.PLAYSTATION -> Color(0xFFB3C7E6) // PlayStation blue
+        GamePlatform.SWITCH -> Color(0xFFF2B4B4) // Switch red
+        GamePlatform.DEFAULT -> MaterialTheme.colorScheme.surfaceVariant
+    }
 
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 16.dp)
-            .animateContentSize()
+            .padding(bottom = 12.dp)
+            .animateContentSize(),
+        colors = CardDefaults.cardColors(
+            containerColor = cardBackgroundColor,
+        )
     ) {
         Column(
             modifier = Modifier

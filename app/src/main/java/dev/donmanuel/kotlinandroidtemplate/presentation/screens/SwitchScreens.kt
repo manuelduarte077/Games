@@ -18,6 +18,7 @@ import dev.donmanuel.kotlinandroidtemplate.presentation.composables.CustomTopApp
 import dev.donmanuel.kotlinandroidtemplate.presentation.composables.GameCard
 import dev.donmanuel.kotlinandroidtemplate.presentation.composables.ShimmerEffect
 import dev.donmanuel.kotlinandroidtemplate.presentation.viewmodels.GameViewModel
+import dev.donmanuel.kotlinandroidtemplate.ui.utils.GamePlatform
 
 @Composable
 fun SwitchScreens(
@@ -54,7 +55,8 @@ fun SwitchScreens(
             } else {
                 items(games) { game ->
                     GameCard(
-                        game = game
+                        game = game,
+                        platform = GamePlatform.SWITCH
                     )
                 }
             }
