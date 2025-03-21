@@ -32,6 +32,7 @@ fun XboxScreens(
 
     val games = viewModel.xboxGames.collectAsState().value
     val isLoading = viewModel.isLoading.collectAsState().value
+    val favoriteGames = viewModel.favorites.collectAsState().value
 
     var showSearch by remember { mutableStateOf(false) }
     var searchText by remember { mutableStateOf("") }
@@ -69,7 +70,13 @@ fun XboxScreens(
                 }
             } else {
                 items(games) { game ->
-                    GameCard(game = game, platform = GamePlatform.XBOX)
+                    GameCard(
+                        game = game, platform = GamePlatform.XBOX,
+                        onFavoriteClick = {
+                            viewModel.toggleFavorite(game)
+                        },
+                        isFavorite = favoriteGames.any { it.id == game.id }
+                    )
                 }
             }
         }

@@ -27,6 +27,7 @@ fun SwitchScreens(
 
     val games = viewModel.switchGames.collectAsState().value
     val isLoading = viewModel.isLoading.collectAsState().value
+    val favoriteGames = viewModel.favorites.collectAsState().value
 
     Scaffold(
         topBar = {
@@ -56,7 +57,11 @@ fun SwitchScreens(
                 items(games) { game ->
                     GameCard(
                         game = game,
-                        platform = GamePlatform.SWITCH
+                        platform = GamePlatform.SWITCH,
+                        isFavorite = favoriteGames.any { it.id == game.id },
+                        onFavoriteClick = {
+                            viewModel.toggleFavorite(game)
+                        },
                     )
                 }
             }
