@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.ui.text.google.fonts)
 
     // Retrofit
     implementation(libs.retrofit)
@@ -66,10 +67,10 @@ dependencies {
     ksp(libs.androidx.hilt.navigation.compose)
 
     // Room for database
-    implementation(libs.androidx.room.runtime) // for Room
-    implementation(libs.androidx.room.ktx) // for Kotlin extensions
-    annotationProcessor(libs.androidx.room.compiler) // for Java
-    ksp(libs.androidx.room.compiler) // for Kotlin
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    annotationProcessor(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
 
     // Coil
     implementation(libs.coil.compose) // for image loading
