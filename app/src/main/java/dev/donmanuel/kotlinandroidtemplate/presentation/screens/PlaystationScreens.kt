@@ -24,8 +24,9 @@ import dev.donmanuel.kotlinandroidtemplate.ui.utils.GamePlatform
 fun PlaystationScreens(
     viewModel: GameViewModel = hiltViewModel()
 ) {
-    val games = viewModel.switchGames.collectAsState().value
+    val games = viewModel.playstationGames.collectAsState().value
     val isLoading = viewModel.isLoading.collectAsState().value
+    val favoriteGames = viewModel.favorites.collectAsState().value
 
     Scaffold(
         topBar = {
@@ -53,7 +54,13 @@ fun PlaystationScreens(
                 }
             } else {
                 items(games) { game ->
-                    GameCard(game = game, platform = GamePlatform.PLAYSTATION)
+                    GameCard(
+                        game = game, platform = GamePlatform.PLAYSTATION,
+                        onFavoriteClick = {
+                            viewModel.toggleFavorite(game)
+                        },
+                        isFavorite = favoriteGames.any { it.id == game.id }
+                    )
                 }
             }
         }

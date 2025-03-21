@@ -44,10 +44,14 @@ import dev.donmanuel.kotlinandroidtemplate.ui.utils.GamePlatform
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun GameCard(game: Games, platform: GamePlatform) {
+fun GameCard(
+    game: Games,
+    platform: GamePlatform,
+    onFavoriteClick: () -> Unit,
+    isFavorite: Boolean,
+) {
     var expanded by remember { mutableStateOf(false) }
     val rotationState by animateFloatAsState(targetValue = if (expanded) 180f else 0f, label = "")
-    var isFavorite by remember { mutableStateOf(false) }
 
     val cardBackgroundColor = when (platform) {
         GamePlatform.XBOX -> Color(0xFFB5E6B5) // Xbox green
@@ -69,8 +73,7 @@ fun GameCard(game: Games, platform: GamePlatform) {
         Column(
             modifier = Modifier
                 .clickable { expanded = !expanded }
-                .padding(16.dp)
-        ) {
+                .padding(16.dp)) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -96,18 +99,15 @@ fun GameCard(game: Games, platform: GamePlatform) {
             ) {
                 game.genre.forEach { genre ->
                     AssistChip(
-                        onClick = { /* Do something */ },
-                        leadingIcon = {
+                        onClick = { /* Do something */ }, leadingIcon = {
                             Icon(
                                 Icons.Filled.Face,
                                 contentDescription = "Localized description",
                                 Modifier.size(AssistChipDefaults.IconSize)
                             )
-                        },
-                        label = {
+                        }, label = {
                             Text(text = genre)
-                        },
-                        modifier = Modifier.padding(end = 8.dp)
+                        }, modifier = Modifier.padding(end = 8.dp)
                     )
                 }
             }
@@ -136,11 +136,10 @@ fun GameCard(game: Games, platform: GamePlatform) {
                         horizontalArrangement = androidx.compose.foundation.layout.Arrangement.End
                     ) {
                         FloatingActionButton(
-                            onClick = { isFavorite = !isFavorite },
-                            modifier = Modifier.size(48.dp)
+                            onClick = onFavoriteClick, modifier = Modifier.size(48.dp)
                         ) {
                             Icon(
-                                imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                                imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                                 contentDescription = "Favorite",
                                 modifier = Modifier.size(24.dp)
                             )
